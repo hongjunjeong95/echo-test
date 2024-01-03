@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  echo-mysql:
+    image: mysql:8.2.0
+    restart: unless-stopped
+    container_name: echo-mysql
+    ports:
+      - '3307:3306'
+    volumes:
+      - ./database/mysql/data:/var/lib/mysql
+    env_file:
+      - .env
+    command: --bind-address=0.0.0.0
+    platform: linux/x86_64
