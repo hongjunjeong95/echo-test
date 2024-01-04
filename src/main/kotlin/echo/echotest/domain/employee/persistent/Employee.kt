@@ -3,6 +3,10 @@ package echo.echotest.domain.employee.persistent
 import au.com.console.kassava.kotlinEquals
 import au.com.console.kassava.kotlinHashCode
 import au.com.console.kassava.kotlinToString
+import echo.echotest.domain.department.persistent.Department
+import echo.echotest.domain.job.persistent.Job
+import echo.echotest.domain.jobHistory.persistent.JobHistory
+import echo.echotest.domain.region.persistent.Region
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -35,7 +39,22 @@ class Employee(
     var commissionPct: Number,
 
     @Enumerated(EnumType.STRING)
-    val role: UserRole = UserRole.USER
+    val role: UserRole = UserRole.USER,
+
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    val departmentList:  List<JobHistory> = emptyList(),
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "job_id")
+    val job:Job,
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "manager_id")
+    val manager: Employee,
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    val department: Department,
 ) {
     override fun toString() = kotlinToString(properties = toStringProperties)
 
