@@ -8,6 +8,7 @@ import echo.echotest.domain.job.persistent.Job
 import echo.echotest.domain.jobHistory.persistent.JobHistory
 import jakarta.persistence.*
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity
@@ -47,7 +48,7 @@ class Employee(
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "job_id")
-    val job: Job,
+    val job: Job? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
@@ -67,5 +68,9 @@ class Employee(
         private val toStringProperties = arrayOf(
             Employee::employeeId,
         )
+    }
+
+    fun update(salary: BigDecimal){
+        this.salary = salary
     }
 }

@@ -6,6 +6,7 @@ import au.com.console.kassava.kotlinToString
 import echo.echotest.domain.employee.persistent.Employee
 import echo.echotest.domain.jobHistory.persistent.JobHistory
 import jakarta.persistence.*
+import java.math.BigDecimal
 
 @Entity
 @Table(name = "jobs")
@@ -18,10 +19,10 @@ class Job(
     var jobTitle: String = "",
 
     @Column(name = "min_salary", precision = 8, scale = 0)
-    var minSalary: Long? = null,
+    var minSalary: BigDecimal? = null,
 
     @Column(name = "max_salary", precision = 8, scale = 0)
-    var maxSalary: Long? = null,
+    var maxSalary: BigDecimal? = null,
 
     @OneToMany(mappedBy = "job")
     val jobHistories:  List<JobHistory> = emptyList(),

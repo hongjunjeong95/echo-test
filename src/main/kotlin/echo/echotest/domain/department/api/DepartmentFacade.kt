@@ -10,5 +10,5 @@ class DepartmentFacade(
     private val departmentService: DepartmentService,
 ) {
     @Transactional
-    fun findDepartment(id:Long): Department = departmentService.findByIdOrThrow(id)
+    fun findDepartment(id: Long): Department = departmentService.findByIdOrThrow(id)
 }

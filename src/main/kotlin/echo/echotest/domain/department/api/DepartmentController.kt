@@ -17,7 +17,7 @@ class DepartmentController(private val departmentFacade: DepartmentFacade) {
     @GetMapping("/{departmentId}/location")
     fun findOneWithLocation(
         @PathVariable(required = true)
-        @Schema(description = "department id", example = "1")
+        @Schema(description = "department id", example = "90")
         departmentId: Long,
     ): ApiResponse<DepartmentResponse> =
         ApiResponse.success(DepartmentResponse.of(departmentFacade.findDepartment(departmentId)))
