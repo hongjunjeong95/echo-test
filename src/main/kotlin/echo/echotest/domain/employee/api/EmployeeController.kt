@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/employees")
 class EmployeeController(private val employeeFacade: EmployeeFacade) {
-    @Operation(summary = "상품 그룹 리스트 조회")
+    @Operation(summary = "사원 조회")
     @GetMapping("/{employeeId}")
     fun findOne(
         @PathVariable(required = true)
         @Schema(description = "employee id", example = "1")
         employeeId: Long,
     ): ApiResponse<EmployeeResponse> =
-        ApiResponse.success(EmployeeResponse.of(employeeFacade.findOne(employeeId)))
+        ApiResponse.success(EmployeeResponse.of(employeeFacade.findEmployee(employeeId)))
 }

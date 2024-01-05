@@ -13,7 +13,7 @@ import jakarta.persistence.*
 class Department(
     @Id
     @Column(name = "department_id", nullable = false, unique = true, updatable = false)
-    val departmentId: Long? = null,
+    val departmentId: Long = 0,
 
     @Column(name = "department_name", length = 30, nullable = false)
     var departmentName: String = "",

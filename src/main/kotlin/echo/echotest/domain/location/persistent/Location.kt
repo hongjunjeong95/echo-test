@@ -29,10 +29,10 @@ class Location(
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "country_id")
-    val country: Country,
+    val country: Country? = null,
 
-    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    val departmentList:  List<Department> = emptyList(),
+    @OneToMany(mappedBy = "location")
+    val departments:  List<Department> = emptyList(),
 ) {
     override fun toString() = kotlinToString(properties = toStringProperties)
 

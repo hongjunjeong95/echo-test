@@ -10,5 +10,5 @@ class EmployeeFacade(
     private val employeeService: EmployeeService,
 ) {
     @Transactional
-    fun findOne(id:Long): Employee = employeeService.findByIdOrThrow(id)
+    fun findEmployee(id:Long): Employee = employeeService.findByIdOrThrow(id)
 }
