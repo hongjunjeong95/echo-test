@@ -7,13 +7,13 @@ import java.util.Date
 
 data class EmployeeResponse(
     val employeeId: Long,
-    var firstName: String?,
-    var lastName: String,
-    var email: String,
-    var phoneNumber: String?,
-    var hireDate: Date,
-    var salary: BigDecimal,
-    var commissionPct: BigDecimal?,
+    val firstName: String?,
+    val lastName: String,
+    val email: String,
+    val phoneNumber: String?,
+    val hireDate: Date,
+    val salary: BigDecimal,
+    val commissionPct: BigDecimal?,
 ){
     companion object {
         fun of(employee: Employee): EmployeeResponse {

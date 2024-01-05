@@ -15,6 +15,13 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
 
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
+    annotation("jakarta.persistence.Embeddable")
+}
+
+
 repositories {
     mavenCentral()
     jcenter()

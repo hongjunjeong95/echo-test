@@ -2,7 +2,6 @@ package echo.echotest.domain.employee.api
 
 import echo.echotest.common.dto.ApiResponse
 import echo.echotest.domain.employee.api.dto.EmployeeResponse
-import echo.echotest.domain.employee.service.EmployeeService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.web.bind.annotation.GetMapping

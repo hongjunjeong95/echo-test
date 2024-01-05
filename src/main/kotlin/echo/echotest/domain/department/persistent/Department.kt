@@ -20,14 +20,17 @@ class Department(
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "manager_id")
-    val manager: Employee,
+    val manager: Employee? = null,
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "location_id")
-    val location: Location,
+    val location: Location? = null,
 
-    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    val jobHistoryList:  List<JobHistory> = emptyList(),
+    @OneToMany(mappedBy = "department")
+    val jobHistories:  List<JobHistory> = emptyList(),
+
+    @OneToMany(mappedBy = "department")
+    val employees:  List<Employee> = emptyList(),
 ) {
     override fun toString() = kotlinToString(properties = toStringProperties)
 

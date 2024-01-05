@@ -11,23 +11,23 @@ import jakarta.persistence.*
 @Table(name = "jobs")
 class Job(
     @Id
-    @Column(name = "job_id")
-    var jobId: String,
+    @Column(name = "job_id", length = 10, nullable = false, unique = true, updatable = false)
+    val jobId: String = "",
 
-    @Column(name = "job_title")
-    var jobTitle: String,
+    @Column(name = "job_title", length = 35, nullable = false)
+    var jobTitle: String = "",
 
-    @Column(name = "min_salary", nullable = true)
-    var minSalary: Long = 0,
+    @Column(name = "min_salary", precision = 8, scale = 0)
+    var minSalary: Long? = null,
 
-    @Column(name = "max_salary", nullable = true)
-    var maxSalary: Long = 0,
+    @Column(name = "max_salary", precision = 8, scale = 0)
+    var maxSalary: Long? = null,
 
-    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    val jobHistoryList:  List<JobHistory> = emptyList(),
+    @OneToMany(mappedBy = "job")
+    val jobHistories:  List<JobHistory> = emptyList(),
 
-    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    val employeeList:  List<Employee> = emptyList(),
+    @OneToMany(mappedBy = "job")
+    val employees:  List<Employee> = emptyList(),
 ) {
     override fun toString() = kotlinToString(properties = toStringProperties)
 

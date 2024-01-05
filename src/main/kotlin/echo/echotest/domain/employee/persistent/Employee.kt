@@ -15,7 +15,7 @@ import java.util.*
 class Employee(
     @Id
     @Column(name = "employee_id", nullable = false, unique = true, updatable = false)
-    val employeeId: Long? = null,
+    val employeeId: Long = 0,
 
     @Column(name = "first_name", length = 20)
     var firstName: String? = null,
@@ -38,8 +38,8 @@ class Employee(
     @Column(name = "commission_pct", precision = 2, scale = 2)
     var commissionPct: BigDecimal? = null,
 
-    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    var departmentList:  List<JobHistory> = emptyList(),
+    @OneToMany(mappedBy = "employee")
+    val jobHistories:  List<JobHistory> = emptyList(),
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
@@ -47,11 +47,14 @@ class Employee(
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "job_id")
-    val job:Job,
+    val job: Job,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     var department: Department? = null,
+
+    @OneToMany(mappedBy = "manager")
+    val departments:  List<Department> = emptyList(),
 ) {
     override fun toString() = kotlinToString(properties = toStringProperties)
 
