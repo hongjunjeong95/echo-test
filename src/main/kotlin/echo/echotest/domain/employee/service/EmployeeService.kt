@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service
 class EmployeeService(
     private val employeeRepository: EmployeeRepository,
 ) {
-    fun me(id: Long): Employee = employeeRepository.findByIdOrThrow(id, "존재하지 않는 회원입니다.")
+    fun findByIdOrThrow(id: Long): Employee = employeeRepository.findByIdOrThrow(id, "존재하지 않는 회원입니다.")
 }

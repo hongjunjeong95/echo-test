@@ -9,20 +9,17 @@ import echo.echotest.domain.location.persistent.Location
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "locations")
+@Table(name = "departments")
 class Department(
     @Id
-    @Column(name = "department_id")
-    var departmentId: Long = 0,
+    @Column(name = "department_id", nullable = false, unique = true, updatable = false)
+    val departmentId: Long? = null,
 
-    @Column(name = "department_name")
-    var departmentName: String,
+    @Column(name = "department_name", length = 30, nullable = false)
+    var departmentName: String = "",
 
-    @Column(name = "manager_id")
-    var managerId: Long = 0,
-
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "manager_id")
     val manager: Employee,
 
     @ManyToOne(fetch=FetchType.LAZY)

@@ -6,55 +6,52 @@ import au.com.console.kassava.kotlinToString
 import echo.echotest.domain.department.persistent.Department
 import echo.echotest.domain.job.persistent.Job
 import echo.echotest.domain.jobHistory.persistent.JobHistory
-import echo.echotest.domain.region.persistent.Region
 import jakarta.persistence.*
-import java.time.LocalDateTime
+import java.math.BigDecimal
+import java.util.*
 
 @Entity
 @Table(name = "employees")
 class Employee(
     @Id
-    @Column(name = "employee_id")
-    var employeeId: Long = 0,
+    @Column(name = "employee_id", nullable = false, unique = true, updatable = false)
+    val employeeId: Long? = null,
 
-    @Column(name = "first_name", nullable = true)
-    var firstName: String,
+    @Column(name = "first_name", length = 20)
+    var firstName: String? = null,
 
-    @Column(name = "last_name")
-    var lastName: String,
+    @Column(name = "last_name", length = 25, nullable = false)
+    var lastName: String = "",
 
-    @Column(name = "email")
-    var email: String,
+    @Column(name = "email", length = 25, nullable = false)
+    var email: String = "",
 
-    @Column(name = "phone_number", nullable = true)
-    var phoneNumber: Number,
+    @Column(name = "phone_number", length = 20)
+    var phoneNumber: String? = null,
 
-    @Column(name = "hire_date")
-    var hireDate: LocalDateTime = LocalDateTime.now(),
+    @Column(name = "hire_date", nullable = false)
+    var hireDate: Date = Date(),
 
-    @Column(name = "salary")
-    var salary: Number,
+    @Column(name = "salary", precision = 8, scale = 2, nullable = false)
+    var salary: BigDecimal = BigDecimal.ZERO,
 
-    @Column(name = "commission_pct", nullable = true)
-    var commissionPct: Number,
-
-    @Enumerated(EnumType.STRING)
-    val role: UserRole = UserRole.USER,
+    @Column(name = "commission_pct", precision = 2, scale = 2)
+    var commissionPct: BigDecimal? = null,
 
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    val departmentList:  List<JobHistory> = emptyList(),
+    var departmentList:  List<JobHistory> = emptyList(),
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id")
+    var manager: Employee? = null,
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "job_id")
     val job:Job,
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "manager_id")
-    val manager: Employee,
-
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "department_id")
-    val department: Department,
+    var department: Department? = null,
 ) {
     override fun toString() = kotlinToString(properties = toStringProperties)
 
@@ -68,9 +65,4 @@ class Employee(
             Employee::employeeId,
         )
     }
-}
-
-
-enum class UserRole {
-    USER, PRODUCER, ADMIN, ANONYMOUS
 }
