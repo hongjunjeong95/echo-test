@@ -1,7 +1,9 @@
 package echo.echotest.domain.employee.api
 
 import echo.echotest.domain.department.api.service.DepartmentService
+import echo.echotest.domain.employee.api.dto.UpdateEmployeeBodyDto
 import echo.echotest.domain.employee.persistent.Employee
+import echo.echotest.domain.employee.persistent.UpdateEmployee
 import echo.echotest.domain.employee.service.EmployeeService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -23,7 +25,7 @@ class EmployeeFacade(
                 it.salary.intValueExact(),
                 salaryPercent
             )}.map {
-                it.update(this.getIncreasedSalary(it.salary.intValueExact(),salaryPercent).toBigDecimal())
+                it.update(UpdateEmployee(salary = this.getIncreasedSalary(it.salary.intValueExact(),salaryPercent).toBigDecimal()))
                 employeeService.save(it)
             }
         }
@@ -35,4 +37,16 @@ class EmployeeFacade(
         maxSalary >= this.getIncreasedSalary(currentSalary,salaryPercent)
     private fun getIncreasedSalary(currentSalary: Int, salaryPercent: Int): Int =
         currentSalary * (salaryPercent+100) / 100
+
+    fun updateEmployee(employeeId: Long, body: UpdateEmployeeBodyDto?) {
+        checkNotNull(body) { "UpdateEmployeeBodyDto is null" }
+        return employeeService.findByIdOrThrow(employeeId).let {
+            it.update(UpdateEmployee(
+                firstName = body.firstName,
+                lastName = body.lastName,
+                email = body.email,
+                phoneNumber = body.phoneNumber
+            ))
+            employeeService.save(it)
+        } }
 }

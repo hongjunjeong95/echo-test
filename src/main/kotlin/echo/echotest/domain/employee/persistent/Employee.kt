@@ -8,7 +8,6 @@ import echo.echotest.domain.job.persistent.Job
 import echo.echotest.domain.jobHistory.persistent.JobHistory
 import jakarta.persistence.*
 import java.math.BigDecimal
-import java.time.LocalDateTime
 import java.util.*
 
 @Entity
@@ -70,7 +69,19 @@ class Employee(
         )
     }
 
-    fun update(salary: BigDecimal){
-        this.salary = salary
+    fun update(param: UpdateEmployee){
+        this.salary = param.salary ?: this.salary
+        this.firstName = param.firstName ?: this.firstName
+        this.lastName = param.lastName ?: this.lastName
+        this.email = param.email ?: this.email
+        this.phoneNumber = param.phoneNumber ?: this.phoneNumber
     }
 }
+
+data class UpdateEmployee(
+    val firstName: String? = null,
+    val lastName: String? = null,
+    val email: String? = null,
+    val phoneNumber: String? = null,
+    val salary: BigDecimal? = null
+)

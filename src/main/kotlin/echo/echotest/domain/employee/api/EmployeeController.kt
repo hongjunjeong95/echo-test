@@ -3,6 +3,7 @@ package echo.echotest.domain.employee.api
 import echo.echotest.common.dto.ApiResponse
 import echo.echotest.domain.employee.api.dto.EmployeeResponse
 import echo.echotest.domain.employee.api.dto.IncreaseSalaryQueryDto
+import echo.echotest.domain.employee.api.dto.UpdateEmployeeBodyDto
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.web.bind.annotation.*
@@ -23,9 +24,21 @@ class EmployeeController(
         ApiResponse.success(EmployeeResponse.of(employeeFacade.findEmployee(employeeId)))
 
     @Operation(summary = "임금 인상")
-    @PutMapping("/increase/{departmentId}")
+    @PutMapping("/increase-department")
     fun increaseSalaryPercent(
         query: IncreaseSalaryQueryDto
     ) =
         ApiResponse.success((employeeFacade.increaseSalaryPercent(query.departmentId, query.salaryPercent)))
+
+    @Operation(summary = "사원 데이터 수정")
+    @PutMapping("/{employeeId}")
+    fun update(
+        @PathVariable
+        @Schema(description = "team data id", example = "200")
+        employeeId: Long,
+
+        @RequestBody
+        body: UpdateEmployeeBodyDto
+    ): ApiResponse<Unit> =
+        ApiResponse.success(employeeFacade.updateEmployee(employeeId, body))
 }
